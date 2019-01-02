@@ -1,0 +1,294 @@
+python
+--------------
+
+1. Installation of python
+	
+		https://www.python.org/downloads/
+
+2. Pycahrm Installation
+
+		http://www.jetbrains.com/pycharm/download/#section=windows
+
+3. Python Concepts 
+
+	a) Data Structures : 
+	   ---------------
+
+	    1. Numeric
+
+	    	- Integer type
+
+	    		Ex : a = 10
+
+	    			$ Integer to float converter
+
+	    				a = 10
+	    			  	g = float(a)
+						print (g)
+
+	    	- Float type
+
+	    	    Ex : b = 10.45
+
+	    	    	$ Float to Integer converter
+	    	    	    
+	    	    	    e = 10.45
+	    	    	    f = int(e)
+						print (f) 
+
+	    	- Complex type
+
+	    		Ex : i = 7+8j
+					 print (i)
+
+	    	- long type
+
+	    		Python no longer supporting the long type from 3.8 version on words .
+
+	    		Ex:  d = 1000000786786*2009999999000009989
+
+	    2. Lists
+
+	    	Note :  List and array declaration should be same. But , the major difference is Array's can be declared with same data type but list can be any thing .
+
+	    				# List diclaration
+
+						list = ['anand','hari',200]
+						print (list)
+
+						# Update a List
+
+						list[1] = "reddy"
+						print (list)
+
+						# Print the lenth of the list
+
+						print (len(list))
+
+						# Print the element of the list
+
+						print (list[2])
+
+						# Print the part of the list
+
+						print (list[0:2])
+
+						# concatinate of lists
+
+						list2 = ['brush','bath','towel']
+						print (list+list2)
+
+						# Print list multiple times
+						print (list2*2)
+
+	    3. Tuples
+
+	    	Note :  Tuples are also same like Lists but , these are immutable and declared with open and closed () .
+
+	    			t1 = ("hello","trtey",786485)
+					print (t1)
+
+
+	    4. Strings 
+	    
+					    # String declaration
+
+						a = " hello all this is anand !!"
+						print (a)
+
+						# string length\
+
+						print (len(a))
+
+						# Locate a character in string
+
+						print (a.find('d'))
+						print (a.index('d'))
+
+						# Count the number of times the word repeated
+
+						print (a.count('a'))
+
+						# Print a part of string
+
+						print (a[0:10])
+
+						# Reverse a String
+
+						print (a[::-1])
+
+						# convert to upper case
+
+						print (a.upper())
+
+						# Convert to lower
+
+						print (a.lower())
+
+						# Concatinate a string
+
+						print (a+'Hari')
+
+						# print multiple times
+
+						print (a*2)
+
+	    5. Set
+
+	    	Note : It is unordered collection of uniuqe items .
+
+	    		t1 = ['anand','hari','h','h','g']
+				g = set(t1)
+				print (g)
+
+	    6. Dictionary
+
+	    		# Dictionary
+
+				de = { 'name':'anand','roll':'1123','id':'67'}
+				print (de['name'])
+				print (de['id'])
+
+
+	b. Python Operations
+
+
+		1. Arithmetic
+		   [ + , - , * , / , % , **(exponenent or square)]
+
+		2. Comparision
+		   [ == , != , > , < , >= , <= ]
+
+		3. Membership
+		   [ in , not in ]
+
+		   3.1 in:
+		    	a = 10
+				list = [10,20,30,40,50]
+				if (a in list):
+				    print ('a in the present list')
+
+
+
+			3.2 not in:
+			 	a = 21
+				list = [10,20,30,40,50]
+				if (a not in list):
+				    print ('a in not in the present list')
+
+		4. Bitwise
+		   [ & , | , ^ , ~ , << , >>]
+
+		5. Logical Operators
+
+			5.1 Logical AND
+
+			    a = 10
+				b = 20
+				c = 0
+				if ( a==10) and (b==a+10):
+				    print ('logical and got passed')
+
+
+			5.2 Logical OR
+
+			    a = 10
+				b = 20
+				c = 0
+				if ( a==10) or (b==a+30):
+				    print ('logical and got passed')
+
+
+			5.3  Logical NOT
+
+				if (not c):
+    			print ('condition true')
+
+
+    c. Condition Statements in Python
+
+    	1. if
+    	2. elif
+    	3. else
+
+    	Ex :
+
+    			a = 20
+				b = 20
+				if (a>b):
+				    print('A is bigger')
+				elif(a<b):
+				    print('B is bigger')
+				else:
+				    print('both are equal')
+
+
+	D. Loops in Python
+
+		1. While
+		2. For
+		3. Nested
+
+			1.1 While :
+
+					a = 0
+					while (a<10):
+					    print('the value of a',a)
+					    a = a+1
+					print('while executed successfully')
+
+
+			3.1 Nested While
+
+					i = 2
+					while (i<100):
+					    j = 2
+					    while ( j<= (i/j) ):
+					        if not (i%j): break
+					        j=j+1
+					    if (j>i/j): print(i,'is prime')
+					    i=i+1
+
+
+
+	E. Functions in Python
+
+		A function is a block of organized , reusable code that is performed single releted action.
+
+		1. Predefined function
+		2. Userdefined function
+
+			2.1 userdefined function
+
+
+					def add(a,b):
+					    c =(a+b)
+					    return (c)
+					p = add(2,7)
+					print(p)
+
+
+
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

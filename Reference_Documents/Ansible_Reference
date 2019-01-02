@@ -1,0 +1,292 @@
+Ansible :
+1.	Ansible Adhoc Mode
+2.	Ansible-playbook
+3.	Ansible-galaxy
+
+
+Adhoc-Mode
+----------
+
+-	Syntax-1
+    Ansible { group name/server name }  - I { inventory/host name } –m { module } 
+    Ex:  ansible web -i inventory -m ping
+
+-   Syntax-2
+    Ansible { group name/server name }  - I { inventory/host name } –m { module } -a {specify what you want}
+    Ex:  ansible web -i inventory -m yum -a "name=httpd state=latest" -b
+    note :  -b for become root user
+
+
+Ansible-Playbook
+----------------
+
+-   Syntax
+    Ansible-playbook {playbook name}
+    Ansible-playbook -vvv {playbook name} 
+    Ansible-playbook {playbook name} --sysntax-check
+    Ansible-playbook {playbook name} --check
+    
+
+Ansible-Galaxy 
+--------------
+
+-   Syntax
+    ansible-galaxy [delete|import|info|init|install|list|login|remove|search|setup] {file name}
+
+-   Roles
+    url :  https://github.com/DevOpsScripts/Apache_webserver_role
+           https://github.com/blacksaildivision/lamponsteroids
+
+
+--------------------------------------------------------------------------------------------------------------------------
+|																													     |
+|------------------------------------------------Basic commands----------------------------------------------------------| 
+|																														 | 
+--------------------------------------------------------------------------------------------------------------------------
+
+    1. Crreate a file with permissions
+       ansible 34.245.45.232 -i inventory -m file -a "path=/opt/anand.html state=touch owner=ec2-user group=ec2-user mode=0700" -b
+    
+    2. Create a Directory
+       ansible 34.245.45.232 -i inventory -m file -a "path=/opt/IYT state=directory owner=root group=root mode=0700" -b
+
+    3. Readiing a file content
+       ansible web -i inventory -m shell -a "cat /opt/anand.html"
+
+    4. Starting/stopping a service
+       ansible app -i hosts -m service -a "name=httpd state=stopped" -b
+
+    5. Executing a shell script.
+       ansible app -i /etc/ansible/hosts -m shell -a "/root/test.sh >> output.txt" -b 
+       ansible app -s -a "/opt/myapp/update.sh"
+
+    6. Delete a directory
+       ansible webservers -m file -a "dest=/path/to/c state=absent"
+
+    7. Take a code from Git
+       ansible webservers -m git -a "repo=https://foo.example.org/repo.git dest=/srv/myapp version=HEAD"
+       ansible app -b -m git -a "repo=git://example.com/path/to/repo.git dest=/opt/myapp update=yes version=1.2.3"
+
+    8. Gathering facts
+       ansible all -m setup
+       ansible <HOST_GROUP> -m setup | less
+       ansible <HOST_GROUP> -m setup -a "filter=ansible_distribution*"
+
+    9. To create a backup file from command line with sudo on a group
+       sudo -u normaluser ansible all -m shell -a "cp /etc/sudoers /etc/sudoer_DDMMYYYY" --sudo
+
+    10. Replace Module 
+        sudo -u normaluser ansible all -m replace -a "dest=/root/test.sh regexp='^(\sread -p \"gateway recover after nodes \" gateway_recover_after_nodes)$' replace='XXXXXXXXX'"
+    11. List out all the files in remote server
+        ansible all -i serverslist -m shell -a "ls -ltr /opt"
+ 
+    12. Reboot the servers with out using -m (module)
+        ansible servers -a "/sbin/reboot" -f 10
+        Note : Ad-hoc commands in Ansible also allow you to run commands in parallel. By using the -f switch and specifying how many parallel forks to run, we could reboot all of those hosts ten at a time.
+
+    13. Ask the user to pass the password on server reboot
+        ansible servers -a "/sbin/reboot" -u differentuserhere --become --ask-become-pass 
+
+    14. Copy SSh key Manually
+        ansible <HOST_GROUP> -m authorized_key -a "user=root key='ssh-rsa AAAA...XXX == root@hostname'"
+
+    15. Run ansible as a different user
+        ansible-playbook playbooks/atmo_playbook.yml --user atmouser
+        Note : Using a specific SSH private key:
+               ansible -m ping hosts --private-key=~/.ssh/keys/id_rsa -u centos
+
+    16. Limit the Host/Groups
+        -Host --- ansible-playbook playbooks/PLAYBOOK_NAME.yml --limit "host1"
+        -Multiple hosts ---- ansible-playbook playbooks/PLAYBOOK_NAME.yml --limit "host1,host2"
+        -Group ---ansible-playbook playbooks/PLAYBOOK_NAME.yml --limit 'group1'
+        -Negated limit. NOTE: Single quotes MUST be used to prevent bash interpolation.
+         ansible-playbook playbooks/PLAYBOOK_NAME.yml --limit 'all:!host1'
+
+    17. Check for the Bad Syntax 
+        ansible-playbook playbooks/PLAYBOOK_NAME.yml --syntax-check
+
+    18. Running a playbook in dry-run mode
+        Note : Sometimes it can be useful to see what Ansible might do, but without actually changing anything.
+        ansible-playbook playbooks/PLAYBOOK_NAME.yml --check
+
+    19. Check the Verbose / Complete output
+        ansible-playbook -vvvv playbookname 
+
+    20. For Displaying all the Host info
+        ansible --list-hosts all
+        ansible --list-hosts "*"
+        ansible --list-hosts "vagrant*"
+
+    21. Want to see all teh servers UPTime
+        ansible all -i ./hosts -m command -a "uptime"
+
+    22. Print The echo content
+        ansible app -m shell -a "echo $TERM"
+
+    24. Create a User
+        ansible all -b -m user -a "name=devopsadmin group=admin createhome=yes"
+
+    25. Create a group
+        ansible all -b -m group -a "name=admin state=present"
+
+    26. remove the access for user
+        ansible db -b -m user -a "name=devopsadmin state=absent remove=yes"
+
+    27. Copy a file 
+        ansible db -m synchronize -a "src=test.txt dest=/tmp/host.txt"
+
+    28. Rertrive file from the servers
+        ansible all -s -m fetch -a "src=/etc/hosts dest=/Users/devopsideas/Ansible-Tutorial/"
+
+    29. Run operations in the background
+        ansible -b app -B 3600 -a "yum -y update"
+
+    30. Download a file/zip in playbook
+        - name: download Tomcat
+          get_url: url=http://redrockdigimark.com/apachemirror/tomcat/tomcat-8/v8.5.31/bin/apache-tomcat-8.5.31.tar.gz dest=/opt/apache-tomcat-8.5.31.tar.gz
+
+    31. Unzip/extract a file
+        - name: Extract Tomcat archive
+          unarchive:  src=/opt/apache-tomcat-8.5.31.tar.gz dest=/opt owner=root group=root creates=/opt/apache-tomcat-8.5.31
+
+        - name: Extract Tomcat archive
+          command: tar zxvf /opt/apache-tomcat-8.5.31.tar.gz -C /opt/ creates=/opt/apache-tomcat-8.5.31
+
+    32. Start the Apache
+        - name: Start Tomcat
+          command: nohup /opt/apache-tomcat-8.5.31/bin/startup.sh
+
+    33. 
+
+
+Adhoc Mode Reference Pages :
+1. https://adminoneliner.blogspot.com/2016/08/how-to-ansible-adhoc-commands-one-liners.html
+2. https://docs.ansible.com/ansible/2.5/user_guide/intro_adhoc.html
+3. https://www.businessnewsdaily.com/11039-ansible-ad-hoc-commands-tips.html
+4. https://ansible-tips-and-tricks.readthedocs.io/en/latest/ansible/commands/
+5. https://devopsmates.com/getting-started-with-ansible-ad-hoc-commands/
+6. https://devopsideas.com/ansible-ad-hoc-commands-usage/
+
+
+
+Ansible-Playbook Reference Pages :
+1. https://github.com/gouthamchilakala/ansible-training
+2. https://github.com/gouthamchilakala/Apache-WebServer
+
+
+
+
+Playbook_conditions :
+	- vars
+	--------------------------------------------------------------
+				---
+				 - name: Apache Installation and Configuration
+				   hosts: app
+				   vars:
+				    - package : httpd
+				   become: True
+
+				   tasks:
+				   - name: Install Apache
+				     yum: name={{ package }} state=latest
+
+				   - name: Restart Apache
+				     service: name={{ package }} state=restarted
+	--------------------------------------------------------------
+
+	- extra_vars
+	  Note :  ansible-playbook vars_extra.yml --extra-vars "package=httpd"
+	--------------------------------------------------------------
+			    ---
+				 - name: Apache Installation and Configuration
+				   hosts: app
+				   become: True
+
+				   tasks:
+				   - name: Install Apache
+				     yum: name={{ package }} state=latest
+
+				   - name: Restart Apache
+				     service: name={{ package }} state=restarted
+	--------------------------------------------------------------
+
+	- var_files
+
+	  Note :Varfiles.yml
+	        ---
+
+  				package: httpd
+	--------------------------------------------------------------
+				---
+				 - name: Apache Installation and Configuration
+				   hosts: app
+				   vars_files:
+				    - varfiles.yml
+				   become: True
+
+				   tasks:
+				   - name: Install Apache
+				     yum: name={{ package }} state=latest
+
+				   - name: Restart Apache
+				     service: name={{ package }} state=restarted
+
+	--------------------------------------------------------------
+
+	- set_facts
+	--------------------------------------------------------------
+				---
+				 - name: This play is a basic appserverworld execution
+				   hosts: app
+				   gather_facts: True
+
+				   tasks:
+
+				     - set_fact: Anand="Hello Ansible!!"
+
+				     - debug: var=Anand
+	--------------------------------------------------------------
+
+	- notify_hadler
+	--------------------------------------------------------------
+				---
+				 - name: notify handler condition
+				   hosts: app
+				   become: True
+
+				   tasks:
+				   - name: install apapche
+				     yum: name=httpd state=latest
+
+				   - name: Copy the file to destination
+				     copy: src=/root/index.html dest=/var/www/html/
+				     notify:
+				     - restart apache
+
+				   handlers:
+				   - name: restart apache
+				     service: name=httpd state=restarted
+	--------------------------------------------------------------
+
+	- when
+	--------------------------------------------------------------
+				---
+				 - name: Apache Installation and Configuration
+				   hosts: app
+				   become: True
+
+				   tasks:
+				   - name: Install Apache
+				     yum: name=httpd state=latest
+				     when: ansible_distribution == "RedHat" or ansible_distribution == "Ubuntu"
+
+				   - name: Copy the file to destination
+				     copy: src=/root/index.html dest=/var/www/html/
+
+	--------------------------------------------------------------
+
+	- include
+	--------------------------------------------------------------
+	
+
+
