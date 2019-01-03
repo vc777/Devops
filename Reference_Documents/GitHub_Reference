@@ -18,3 +18,14 @@ GitHub Commands:
 	git branch -d (branch name)
 
 	Note :  use -D for forcefully delete. 
+
+
+2. For checking the differences b/w the files .
+   
+   	git diff
+
+   	Note :  If you want to check under staging area then use follow
+
+   			git diff --staged
+
+  
