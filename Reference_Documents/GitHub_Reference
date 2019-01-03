@@ -1,0 +1,20 @@
+GitHub 
+
+
+
+
+
+
+
+GitHub Commands:
+-----------------
+
+1. How to delete a branch on remote (in github) ??
+
+	git push origin --delete (branch name)
+
+-- If the remote brnach deleted also the branch is going to appeare on local (computer). So , if u want to delete that in 		   local then follow these commands .
+
+	git branch -d (branch name)
+
+	Note :  use -D for forcefully delete. 
