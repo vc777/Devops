@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-hsgfhello
-=======
 hello all
->>>>>>> 5e646f3a48443e252b07e13ee6f3cd39cdbe7450
