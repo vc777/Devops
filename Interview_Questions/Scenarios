@@ -1,0 +1,77 @@
+1.  As my project requirement is I have to setup nexus to push and pull images of my custom related so I have to configure nexus for this I tried but till I didn't do that can u explain how we do that??
+----------------------------------------------------------------------------------------------------------------
+
+- Follow the below video for setup
+	https://www.youtube.com/watch?v=arAXOnvOSyY
+
+- Requirements/Steps
+
+	1. two servers (one for nexus and one for docker )
+	2. Install the Nexus
+	3. Start the nexus
+
+
+
+- In docker server install docker and setup the follow at /etc/docker/daemon.json file
+
+{
+  "insecure-registries": [
+    "63.34.22.147:8083"
+  ],
+  "disable-legacy-registry": true
+}
+
+
+
+
+2. I have www.example.com domain. I have to redirect subdomain (www.example.com) to root domain (example. Com) using aws s3. For ex, when I hit the www.example.com then it shown website whereas when I hit example.com it shown forbidden error... So I have to redirect from subdomain to root domain.. How to do? I read some document in aws... That's telling using s3 bucket we can redirect.... But i couldn't.... Please tell me the procedure if anyone know... Its Urgent  ???
+
+
+Follow the commands in below :
+------------------------------
+https://stackoverflow.com/questions/19349287/route-53-record-set-on-different-port
+
+[ --
+
+Hi Lakshminarayan ,
+
+Follow the following steps to do that ::
+----------------------------------------
+
+1. Create a server and install Nginx/Apache and up the service with 8080 port.    ====DONE
+
+2. Create a Freenom account and buy a DNS name for free    --- DONE
+
+	lakshminarayan.tk 
+
+3. Create a S3 bucket with the same as lakshminarayan.tk name as you created above and follow below steps.
+
+	-  turn on Static Website Hosting in Properties and choose the Redirect response option and configure it with the following options
+
+    - Target bucket or domain: my.ip:8080
+    - Protocol: Leave this blank     ----- DONE
+
+4. Go to Route53 and create a Record Set with the following configuration
+
+   - Name: lakshminarayan.tk
+   - Type: A-IPv4 address
+   - Alias: Yes
+   - Alias Target: Choose the bucket you just created in S3. If it does not appear wait for it to appear.
+   - Routing Policy: Simple
+   - Evaluate Target Health: No
+
+5. Copy the NS names and paste in the Freenom site.
+
+
+Wait for some time for the reflection. For me it's took 3 minutes.
+
+And that's it, In the place of server name try with your LBname/another DNS name .
+
+Best of luck LakshmiNarayan !!!!
+
+Thanks,
+Anand Reddy
+
+
+Site URL   ::  http://lakshminarayan.tk
+Video Link ::  https://drive.google.com/open?id=1MIgniaRNUmMkIvAAAGtPmPWDQNDAKzzP
