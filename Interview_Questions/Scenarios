@@ -1,3 +1,7 @@
+***********************************************************************************************************************************
+***********************************************************************************************************************************
+***********************************************************************************************************************************
+
 1.  As my project requirement is I have to setup nexus to push and pull images of my custom related so I have to configure nexus for this I tried but till I didn't do that can u explain how we do that??
 ----------------------------------------------------------------------------------------------------------------
 
@@ -22,7 +26,9 @@
 }
 
 
-
+***********************************************************************************************************************************
+***********************************************************************************************************************************
+***********************************************************************************************************************************
 
 2. I have www.example.com domain. I have to redirect subdomain (www.example.com) to root domain (example. Com) using aws s3. For ex, when I hit the www.example.com then it shown website whereas when I hit example.com it shown forbidden error... So I have to redirect from subdomain to root domain.. How to do? I read some document in aws... That's telling using s3 bucket we can redirect.... But i couldn't.... Please tell me the procedure if anyone know... Its Urgent  ???
 
@@ -75,3 +81,63 @@ Anand Reddy
 
 Site URL   ::  http://lakshminarayan.tk
 Video Link ::  https://drive.google.com/open?id=1MIgniaRNUmMkIvAAAGtPmPWDQNDAKzzP
+
+***********************************************************************************************************************************
+***********************************************************************************************************************************
+***********************************************************************************************************************************
+
+3.  Write a Pipiline script in groovy for Jenkins CI/CD pipeline.
+
+pipeline {
+    agent any
+    stages {
+        stage('CheckOut') {
+				checkout scm
+        }
+        stage('Compile') {
+			steps {
+			    echo 'Compailing the code'
+			}
+        }
+        stage('test') {
+			steps {
+			    echo 'Testing the code'
+			}
+        }
+        stage('deploy') {
+		    steps {
+			    echo 'Deploying the code'
+			}
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
