@@ -31,3 +31,8 @@ ln -s /opt/node-1.8.12/node-v8.12.0-linux-x64/bin/node /bin/node
 ln -s /opt/node-1.8.12/node-v8.12.0-linux-x64/bin/npm /bin/npm
 
 sudo npm install -g node-dev node-gyp 
+
+sudo npm install forever -g
+
+ln -s /opt/node-1.8.12/node-v8.12.0-linux-x64/bin/forever /bin/forever
+
