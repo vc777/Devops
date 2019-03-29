@@ -1,0 +1,83 @@
+AWS 
+#############################################################################
+
+
+
+
+
+
+
+
+
+
+Jan 26 -2019
+------------
+1. After attaching the volume in Linux what is root it will display ??
+ root volume         /dev/xvda   After_attching  (/dev/xvda1)
+
+ attached volume     /dev/sdf    After_attaching (/dev/xvdf)
+
+ 2nd attached volume /dev/sdg    After_attaching (/dev/xvdg)
+
+ 2.  After attaching the ebs volume can we increase the memory or volume size??
+
+ Yes , we can increse. But , for the effect you need to run the below command
+ 	resize2fs /dev/xvdf 
+
+ 3. Is it possible to change one instance type to another instance type ?
+
+ Of cource it is possible.
+
+ 4. Without using ec2 can we access efs ?
+
+ yes, we are not able to connect.
+
+ 5. How to check the latency for us ??
+ https://www.cloudping.info/
+
+
+
+
+
+ ------------------------------------------------------------------------------
+
+ 1. Which Linux distro is best for the home desktop use ??
+ 2. How to delete the inactive branch in git hub.inative period is 30 days ??
+ 3. How to create database for zabbix using ansible??
+ 4. I have a Jenkins jobs running in host machine so I want to migrate jobs to docker containers can any one give complete solution?
+ 5. How can we assign memory to Jenkins. ??
+ 6. If we lost Jenkins GUI what can we do ??
+ 7. If we define docker volume in docker compose file is it possible to share data with efs,nfs?
+ 8. Can anyone helpme  to configure sms notifications in Jenkins? 
+ 9. Can anyone help me to create a Nexus or Jfrog repo in aws?? 
+ 10.Can anyone tell me the day to day activities for DevOps Engineer?
+ 11.How to springboot application on kubernetes cluster ??
+ 12.How will you mount the local volume to Docker container ??
+ 13.Can we write a for loop in jinja2 templates in ansible ??  
+ 14.How to login docker container
+ 15.Diff between softkink and hardlink
+ 16.How to restart iptables
+ 17.How to execute particular line in a playbook
+ 18.How to see free space
+ 19.How to find version of Linux
+ 20.Diff betw git merge and reabase
+ 21.AWS security groups types
+ 22.How to open particular port ?? Dns port no ,Apache port no
+ 23.Zabbix, ELK for monitoring the servers ??
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+    
+

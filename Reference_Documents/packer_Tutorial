@@ -1,0 +1,101 @@
+Packer Tutorial :
+-----------------
+
+
+Packer is an open source tool for creating identical machine images for multiple platforms from a single source configuration
+
+ Packer commands : 
+ ----------------------
+
+packer fix old.json > new.json
+
+packer inspect template.json
+
+packer validate template.json
+
+packer build template.json
+
+
+
+
+
+Template Json File :
+----------------------
+
+{
+  "variables": {
+    "aws_access_key": "AKIAJGUNDFSHKNZUEZAQ",
+    "aws_secret_key": "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",
+	"REGION": "eu-west-1",
+	"SOURCE_AMI": "ami-0fad7378adf284ce0",
+	"INSTANCE_TYPE": "t2.micro"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "{{user `REGION`}}",
+    "source_ami": "{{user `SOURCE_AMI`}}",
+    "instance_type": "{{user `INSTANCE_TYPE`}}",
+    "ssh_username": "ec2-user",
+    "ami_name": "packer-demo {{timestamp}}",
+	"launch_block_device_mappings" : [
+			{
+               "device_name" : "/dev/sdb",
+               "delete_on_termination" : true,
+               "volume_size" : 10,
+               "volume_type" : "gp2"
+            }
+    ],
+    "ami_block_device_mappings" : [
+            {
+               "device_name" : "/dev/sdb",
+               "delete_on_termination" : true,
+               "volume_type" : "gp2"
+            }
+    ]
+  }],
+  "provisioners": [
+  {
+    "type": "shell",
+	"script": "basic_apps.sh"
+  },
+  {
+    "type": "shell",
+	"script": "jenkins_installation.sh",
+	"pause_before": "10s"
+  }
+  ]
+}
+
+
+
+
+-----------------------------------------------------------
+
+- Run Multiple scripts in single 
+
+    "provisioners": [
+        {
+          "type": "shell",
+          "scripts": [
+            "npm_install.sh",
+            "docker_install.sh",
+            "ansible_install.sh"
+            ]
+        }
+      ]
+
+- Run shell script in multiple sets
+
+    "provisioners": [
+    {
+      "type": "shell",
+    "script": "basic_apps.sh"
+    },
+    {
+      "type": "shell",
+    "script": "jenkins_installation.sh",
+    "pause_before": "10s"
+    }
+    ]

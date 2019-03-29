@@ -1,8 +1,20 @@
 GitHub 
+-------------
+
+1. Is it possible to create a REPO from CLI.
+   
+   with GitHub API (https://api.github.com/)
 
 
+2. Dis-advantages of CVCS ?
+   - Project Checkout/Checck In got delayed.
+   - Remote commits ( ex : GSD project)
+   - Merging is painful
+   - History,Merges,Taging,Conflict resolutions and All code changes are avilable on Central Repo
 
-
+3. Advantages of Git ??
+   - Internet not required for local commits.
+   - 
 
 
 
@@ -35,3 +47,166 @@ GitHub Commands:
 	Note : If u want to see the specific commmit logs in graph format
 
 			git log --graph  2291f4d
+
+4. List of local branches
+   git branch -a
+
+5. list of remote branches
+   git branch -r
+
+6. Life Cycle og GitHUb
+   --------------------
+
+   - vi index.html and do some changes
+   - git checkout -- <filename>  ==> To revert back the changes. Which are not moved to staging area.
+   - git status
+   	 - git add <file name>   ==> To move changes to staging area  	 
+     - git reset HEAD <file name> ==> Unstaged changes after reset
+
+7.You can remove untracked files with:
+  git clean -f
+
+8.You can remove untracked files and directories with:
+  git clean -fd
+
+9.git stash
+   
+  - git stash (or) git stash save <file name>
+  - git stash apply
+  - git stash list
+  - git stash drop <stash id>
+  - git stash show stash@{0}
+
+10 .Revert changes after the commit
+
+		echo "some changes..." > file.html
+		git add file.html
+    # For unstaged the files
+    git reset 
+
+		git commit -m "wrong commit"
+
+		# I need to reset
+		git reset --hard HEAD~1 (cancel changes)
+    git reset 035d5dea7f59b99414614bdcccb76ecd13829699 ( back to unstaged)
+		# OR
+		git reset --soft HEAD~1 # Back to staging
+		git reset HEAD file.html # back to working directory
+		git checkout -- file.html # cancel changes
+
+
+11. How to check the top 2 logs 
+    git log |head -n 7
+
+12. Last 2 commit logs in git 
+    git log -p -2
+
+13. Create a branch and push the branch to GitHUb
+
+    git checkout -b "stage"
+    git push --set-upstream origin stage
+  
+	- Delete Local Branch
+		To delete the local branch use one of the following:
+
+		$ git branch -d branch_name
+		$ git branch -D branch_name
+		Note: The -d option is an alias for --delete, which only deletes the branch if it has already been fully merged in its upstream branch. You could also use -D, which is an alias for --delete --force, which deletes the branch "irrespective of its merged status." [Source: man git-branch]
+
+    - Delete Remote Branch
+
+      git push --delete <remote_name> <branch_name>
+      git branch -d <branch_name>
+
+14. GitHub Merging
+
+    - git checkout -b qa
+    - do some modifications and commit
+    - git checkout development
+    - git pull origin development
+    - git merge qa
+    - git push origin development
+
+ 15. See the merging staructure on Graph
+
+     git log --all --graph
+
+ 16. To remove file from a repository
+
+     git rm README.md
+
+ 17. How to resolve conflicts 
+
+     By using mergetool( Lot of merge tools avilable for it . You need to configure your merge tool to the github cinfiguration file)
+
+ 18. Git Tags:
+     ---------
+
+     - git tag -l/--list
+     - git tag <tagname>   --for create
+     - git tag -am 'these tag is v2.4' v2.4
+     - git push origin development --tags
+     - git tag -d <tagname>   // for delete locally
+     - git push origin development :refs/tags/<tag name>
+     - git checkout v2.4.1 (for detached HEAD mode)
+
+ 19. Git Rebase:
+     -----------
+      Rebasing allows you to pick up merges in the proper order.
+      With rebase, there is no undo!
+      rewrite commit history, so your commit history will be much cleaner then git merge
+
+      Rebasing is an alternative to merging. Instead of creating a new commit that combines the two branches, it moves the commits of one of the branches on top of the other.
+
+	  You can pull using rebase instead of merge (git pull --rebase). The local changes you made will be rebased on top of the remote changes, instead of being merged with the remote changes.
+
+
+      git rebase --abort
+      git rebase --skip
+      git rebase
+
+      Note : https://www.themoderncoder.com/a-better-git-workflow-with-rebase/
+
+
+      Dis advantages :
+
+      Rebase is a destructive operation. That means, if you do not apply it correctly, you could lose committed work and/or break the consistency of other developer's repositories.
+
+
+
+ 20. Git fetch:
+     -----------
+     
+      git pull = git fetch + git merge
+
+      git fetch == > will stores the info into u r local repo but it is not going to merge. For merging u need to run "git merge"
+
+
+
+
+
+21. What is Subgit? Why to use Subgit?
+
+		‘Subgit’ is a tool for a smooth, stress-free SVN to Git migration.  Subgit is a solution for a company -wide migration from SVN to Git that is:
+
+		a)      It is much better than git-svn
+
+		b)      No requirement to change the infrastructure that is already placed
+
+		c)       Allows to use all git and all sub-version features
+
+		d)      Provides genuine stress –free migration experience.
+
+
+22. git diff ??
+ 
+23. What is ‘bare repository’ in GIT ??
+
+
+
+
+
+
+
+
+

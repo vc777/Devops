@@ -226,7 +226,28 @@ python
 	D. Loops in Python
 
 		1. While
+
+			string = "hello"
+				a= 0
+				while a < len(string):
+				    print(a)
+				    a=a+1
+
 		2. For
+			with list :
+
+			mylist = [2,3,4,5,56,7,78]
+				for a in mylist:
+	   				 print(a)
+
+	   		with dictonary:
+
+	   			d = {'key':1,'key':2,'key':3}
+				for a,b in d.items():
+				    print(a)
+				    print(b)
+
+
 		3. Nested
 
 			1.1 While :
@@ -249,6 +270,9 @@ python
 					    if (j>i/j): print(i,'is prime')
 					    i=i+1
 
+		4. Break,continue,pass
+		
+
 
 
 	E. Functions in Python
@@ -270,6 +294,52 @@ python
 
 
 			
+OOPS:
+-----------------------------------------------------
+
+1. Constructor 
+
+		class Car():
+		    def __init__(self,name,price,cc):
+		        self.name = name
+		        self.price = price
+		        self.cc = cc
+
+		honda = Car('city',30000,250)
+		tata = Car('indica',50000,180)
+
+		honda.many = 2019
+		print(honda.cc)
+		print(honda.__dict__)
+		print(tata.__dict__)
+
+
+2. Inheritence
+
+		class Car():
+		    def __init__(self,name,price,cc):
+		        self.name = name
+		        self.price = price
+		        self.cc = cc
+
+		    def price_inc(self):
+		        self.price = self.price*1.15
+
+		#honda = Car('City',5000,180)
+		#print(honda.__dict__)
+		#print(honda.price)
+		#honda.price_inc()
+		#print(honda.price)
+
+		class childclass(Car):
+		    def __init__(self,name,price,cc,mandate):
+		        super.__init__(self,name,price,cc)
+		        self.mandate = mandate
+
+		honda = childclass('vitara',78978,320,2019)
+		print(honda.__dict__)
+
+
 
 
 

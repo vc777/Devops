@@ -1,0 +1,186 @@
+DevOps
+##################################################################################
+
+
+How to login docker container
+Diff between softkink and hardlink
+How to restart iptables
+How to execute particular line in a playbook
+How to see free space
+How to find version of Linux
+
+Any one knows how to export cloudwatch exporter in kubernetes
+Diff betw git merge and reabase
+AWS security groups types
+How to open particular port
+Dns port no
+Apache port no
+I node means?
+How to enable MFA for normal IAM  user
+Hi, I have created 2 instances in same vpc and configured ELB. Opened same port in both, but still showing OutofService. What would be the issue.?
+
+
+
+
+
+
+
+
+
+
+Git
+----------------------------------------------------
+1. difference b/n git revert and git rebase ??
+2. List of local branches
+   git branch -a
+3. list of remote branches
+   git branch -r
+
+1) What is GIT? ...
+2) What is a repository in GIT? ...
+3) What is the command you can use to write a commit message? ...
+4) What is the difference between GIT and SVN? ...
+5) What are the advantages of using GIT? ...
+6) What language is used in GIT? ...
+7) What is the function of 'GIT PUSH' in GIT? ...
+8) Why GIT better than Subversion?
+What is “Staging Area” or “Index” in GIT?
+What is GIT stash?
+What is GIT stash drop?
+How will you know in GIT if a branch has been already merged into master?
+What is the function of git clone?
+What is the function of ‘git config’?
+What does commit object contain?
+How can you create a repository in Git?
+What is ‘head’ in git and how many heads can be created in a repository?
+What is the purpose of branching in GIT?
+
+Q>> https://career.guru99.com/top-40-interview-questions-on-git/
+Q>> https://www.edureka.co/blog/interview-questions/git-interview-questions/
+Q>> https://mindmajix.com/github-interview-questions
+
+
+
+
+
+Jenkins
+----------------------------------------------------
+1. how to take Jenkins backup ??
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Ans :
+------
+https://devopscube.com/jenkins-backup-data-configurations/
+
+There are so many ways to take a backup of the Jenkins.
+
+1. By using the below Plugins.
+
+	- Backup plugin
+	- ThinBackup Plugin
+	They both are doing the same work . You can automate the jenkins backup by scheduling.
+
+2. Manual BackUp
+   - Take a Snapshot of Volume / take an AMI
+   - Take a copy of perticular folder (like Workspace, Plugins etc..)
+
+3. Automate BackUp's
+   - Write a script to store the backup on cloud (s3 bucket etc..)
+
+Along with these you need to maintain the Jenkins FailOver concept .
+
+
+2. How To Setup Custom UI Theme For Jenkins ??
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ANS: 
+
+By using "Simple Theame" plugin.
+
+Use the following URL for the UI change in Jenkins 
+
+URL : http://afonsof.com/jenkins-material-theme/dist/material-teal.css
+
+
+
+3. Do anyone have idea how to test python modules in Jenkins ??
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nagios 
+--------------------------------------------------
+1. In nagios if CPU is over 90% what can you do? 
+
+
+
+
+
+
+
+1. How to increase memory in tomcat
+How to export rds exporter in aws ??
+Actually I want to monitor rds metrics in Prometheus
+What r d security measurements need to b taken in devops ?
+What are the important tags in pom.xml file?Can anyone explain some tags?
+
+
+
+
+
+
+
+==========================================================================================================================
+
+1. How to start the service automatically when the server got reboot ??
+
+/etc/init.d  == > place original file here
+/etc/rc3.d   == > Create a shart cut here
+
+2. Maven Path setup
+
+MAVEN_HOME="/opt/softwares/apache-maven-3.6.0"
+export MAVEN_HOME
+PATH=$PATH:$MAVEN_HOME/bin
+
+3. Jenkins Plugins are going to store as .jpi extenstion.
+
+4. How to read the following file content "Download metadata.log"
+   cat Download\ metadata.log
+
+5. How to reset the password in Jenkins if you forgot ??
+   vi /var/lib/jenkins/users/username/config.xml  >> In that repace the <passwordHash> like follow and use "test" password.
+   <passwordHash>#jbcrypt:$2a$10$razd3L1aXndFfBNHO95aj.IVrFydsxkcQCcLmujmFQzll3hcUrY7S</passwordHash>
+
+6. User administartion Plugins ??
+   -  Role based Stratogy plugin  ==> select jenkins own database and create a role and assign to the users.
+   -  Project-based authorization plugin  == > Directly create a user and assign roles.
+
+7. 
+
+
+
+
+Software versions :
+--------------------------------------
+Maven  3.6.0
+Java   1.8
+Node   8.12
+Jenkins 2.15
+Ansible 2.7.6  ===> Minimum Python Version (2.7)
+Docker 17.0
+
+
+
+
+

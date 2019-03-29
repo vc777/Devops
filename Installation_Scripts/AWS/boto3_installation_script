@@ -1,0 +1,12 @@
+#! /bin/sh
+
+yum install python python-dev python-pip -y
+yum install boto3 -y
+
+
+Follow Link : 
+https://boto3.amazonaws.com/v1/documentation/api/latest/guide/sqs.html
+https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html
+https://www.youtube.com/watch?v=pbBe5-Wc_SM&index=3&list=PLpHPsGmEXv_eVDPdKboWuz3ckm6aDKHh3
+
+

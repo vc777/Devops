@@ -1,8 +1,30 @@
 ***********************************************************************************************************************************
+
+Guys, can anyone tell me, how to read content from s3 bucket from multiple files using aws lambda in python
+Guys, can anyone tell me, how to read content from s3 bucket (multiple csv files) using aws lambda in python
+
 ***********************************************************************************************************************************
+
+high availability of RDS Oracle 12c setup
+
+***********************************************************************************************************************************
+
+when user merged the PR in staging branch in gitlab repo, i need to deploy the latest staging branch to staging server by using private key method or AWS IAM ? How to do...tell me
+
+
+***********************************************************************************************************************************
+
+Need solution for S3 storage for each customer. I have 10000 users and want keep their uploaded files separately. Do we need to create 1 folder for each customer or any secure solution for this use case
+
+***********************************************************************************************************************************
+
+is this possible to migrate from nginx to apache webserver? if possible tell me the procedure
+both nginx and apache running in server. how to change nginx to apache? Should i redirect port number? or what should i do?
+
 ***********************************************************************************************************************************
 
 1.  As my project requirement is I have to setup nexus to push and pull images of my custom related so I have to configure nexus for this I tried but till I didn't do that can u explain how we do that??
+
 ----------------------------------------------------------------------------------------------------------------
 
 - Follow the below video for setup
@@ -26,8 +48,6 @@
 }
 
 
-***********************************************************************************************************************************
-***********************************************************************************************************************************
 ***********************************************************************************************************************************
 
 2. I have www.example.com domain. I have to redirect subdomain (www.example.com) to root domain (example. Com) using aws s3. For ex, when I hit the www.example.com then it shown website whereas when I hit example.com it shown forbidden error... So I have to redirect from subdomain to root domain.. How to do? I read some document in aws... That's telling using s3 bucket we can redirect.... But i couldn't.... Please tell me the procedure if anyone know... Its Urgent  ???
@@ -83,8 +103,7 @@ Site URL   ::  http://lakshminarayan.tk
 Video Link ::  https://drive.google.com/open?id=1MIgniaRNUmMkIvAAAGtPmPWDQNDAKzzP
 
 ***********************************************************************************************************************************
-***********************************************************************************************************************************
-***********************************************************************************************************************************
+
 
 3.  Write a Pipiline script in groovy for Jenkins CI/CD pipeline.
 
@@ -113,12 +132,203 @@ pipeline {
 }
 
 
+Note :  Execute the command (sudo usermod -a -G docker jenkins) when you got the bellow error.
+Other way :  
+
+sudo usermod -a -G root jenkins
+sudo service jenkins restart
+
+Error : Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock
 
 
 
+***********************************************************************************************************************************
+
+how to check all the aws instances/aws resources present/Used under one group account in aws and to send them in mail ??? Any clues that can be done in Jenkins job or any other way ???
+
+
+Hi Karthik ,
+
+As per my understanding , you want a list of Instences/Buckets that are currently presented in a Region ( In My case Ireland).
+That list you want to display/send to the users from Jenkins . If it is right then follow below process to achive it .
+
+Steps: 
+
+1. Create a Role  and assign to the instence for accessing the ec2-instances and s3 buckets.
+
+2.  Install the AWS CLI on Jenkins running server by following shell script.
+
+#!/bin/sh
+
+###############################################################
+#Purpose      :  AWS CLI Installation on RedHat/CentOs Linux
+#Version      :  0.1
+#Author       :  Anand Reddy
+#Created      :  10/01/19
+###############################################################
+
+sudo yum update -y
+
+sudo yum install epel-release -y
+
+# These are optional
+
+sudo yum install wget git unzip zip php java-1.8.0-openjdk-devel -y
+
+sudo yum -y install python-pip
+
+#Upgrade pip to the latest release
+#sudo pip install --upgrade pip
+
+sudo pip install awscli
+
+# To upgrade pip to the latest version, run:
+#sudo pip install awscli --upgrade
+
+
+3. Once aws cli installation done then check with below command
+aws --version
+
+4. After that run the following command to specify perticular region.
+aws config
+
+AWS Access Key ID [None]:
+AWS Secret Access Key [None]:
+Default region name [None]:eu-west-1
+Default output format [None]:
+
+Note : Only fill the region .In my case Ireland (eu-west-1). Because , we already created and assigned the roles for the instence .
+
+5. Then go to the jenkins and create a freestyle project . In the build step run the following command .
+sudo sh /opt/ec2_instance_list.sh
+
+Note : In the /opt path create a file with .sh extension and copy the below steps in it and then execute the job.
+
+
+#! /bin/sh
+
+sudo rm -rf /opt/instance.txt
+sudo aws ec2 describe-instances --output json | grep PublicIpAddress > /opt/instance.txt
+echo " "
+echo " "
+echo "########### list of instences from Ireland region ############"
+sudo cat /opt/instance.txt
+echo " "
+echo " "
+sudo aws s3 ls > /opt/bucket_list.txt
+echo " "
+echo " "
+echo "############### list of Buckets from all regions #############"
+sudo cat /opt/bucket_list.txt
+echo " "
+echo " "
+
+
+Note : I got the Output like below . If you want to send the output to your team then setup the E-mail configuration and send it for each and every deployment .
+
+I hope it is going to help to you .
+Thanks.
 
 
 
+#! /bin/sh
+
+sudo rm -rf /opt/instance.txt
+sudo aws ec2 describe-instances --output json | grep PublicIpAddress > /opt/instance.txt
+echo " "
+echo " "
+echo "########### list of instences from Ireland region ############"
+sudo cat /opt/instance.txt
+echo " "
+echo " "
+sudo aws s3 ls > /opt/bucket_list.txt
+echo " "
+echo " "
+echo "############### list of Buckets from all regions #############"
+sudo cat /opt/bucket_list.txt
+echo " "
+echo " "
+
+
+#echo -e "The instences are" | mailx -vvv -s "The Running Instences are" -a "/opt/instance.txt"  -r "aws.anand71@gmail.com" -S smtp="smtp.gmail.com" aws.anand71@gmail.com
+
+
+aws ec2 describe-instances --output table |grep "PublicDnsName"|grep "||||||"
+
+
+
+***********************************************************************************************************************************
+
+1.  Taking a backup of all the artifactories after the job deployemet to S3 Bucket .
+2.  Taking a backup of Jenkins workspace,Jobs,Plugins etc to S3 Bucket .
+
+***********************************************************************************************************************************
+
+
+I have Jenkins running on my windows server... So I installed aws cli ...now I tried to run simple cli command with execute window batch command "aws s3 ls --profile testsandpit" ...  The output says config profile could not be found
+
+
+Hi Karthick ,
+
+Do the following things to overcome that issue .
+
+way one :
+----------------------------------------------
+aws configure
+
+  AWS Access Key ID [None]: [enter access key]
+  AWS Secret Access Key [None]: [enter secret key]
+  Default region name [None]: [enter region]
+  Default output format [None]: [leave blank]
+
+
+way two : 
+----------------------------------------------
+
+Edit the ~/.aws/config file and place nessasary info
+
+[default]
+region = us-west-2
+output = json
+
+
+***********************************************************************************************************************************
+
+Mount an EBF volume to an Ec2 Instance
+
+Ans :
+
+1. Create a volume
+2. Attach to ec2
+3. then open the instance and mount volume with following commands
+    - fdisk -l or lsblk
+    - If you want to format the disk then use below
+      mkfs -t ext4 /dev/xvdf
+    - make file system (mkfs.ext4 /dev/xvdf)
+    - mkdir /mount1
+    - mount /dev/xvdf /mount1
+    - now check the mount folder by typing df -h
+    - add the following command to /etc/fstab to auto attch the volume after server reeboot
+      /dev/xvdf /mount1 ext4 defaults,nofail 0
+    - If you want to unmount the volume then type like below
+      umount /mount1
+    - If you want then Resize the volume and type the below to see the effect in server.
+      resize2fs /dev/xvdf
+
+
+***********************************************************************************************************************************
+
+If u lost key of server then how to login ??
+
+1. detach the server lost volume and attach to the another server which u have the key.
+2. create a folder and mount the volume
+   mkdir -p /var/recovery-disk
+   mount -o nouuid /dev/xvdf2 /var/recovery-disk
+
+3. then copy the keys to the mounted volume 
+   cat /home/ec2-user/.ssh/authorized-keys >> /var/recovery-disk/home/ec2-user/.ssh/authorized-keys
+4. finally unmount the volume
+   umount /var/recovery-disk
 
 
 

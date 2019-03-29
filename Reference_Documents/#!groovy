@@ -1,0 +1,41 @@
+#!groovy
+
+pipeline {
+    agent any
+    stages {
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()
+                echo 'Cleanup done'
+            }
+        }  
+        stage('Initialization') {
+        	steps {
+        	    checkout scm
+        	}
+        }
+        stage('Run the Script') {
+            steps {
+                scripts {
+                            sh '/opt/softwares/packer build /var/lib/jenkins/workspace/AMI_Creation_With_PACKER/instance.json'
+                }
+            }
+        }
+
+	}
+}
+
+---------
+-Roles and Responsibilities
+---------------------------
+- GitHub Administartion
+- CI/CD pipeline creation
+- Installation of softawres
+- Certificates creation
+- Monitoring all servieces
+- Mesos DC/OS maintainence and Deployments
+- DNS creation
+- Project relese maintainence
+- 
+-----------
+

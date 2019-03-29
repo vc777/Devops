@@ -1,0 +1,52 @@
+What is Maven?
+-------------
+Maven is a build automation tool or a project management tool. With Maven we can import all libraries and can also create project structures. In Maven we have many inbuilt templates. These templates are called archetypes. A Maven is basically a tool used to compile our applications. It helps to develop and managing project structure or applications like deployment, clean, packaging, jar and many more features for the Java-based project.
+
+In another word, it is a Java tool. If you want to create a sample project or skeleton project you can use Maven. It is an automated build tool. The Maven focused on simplicity that it generates intelligent starters and assumes intelligence defaults. It also covers build-oriented phases in Application Lifecycle Management i.e. testing, deployment, builds management, and release versioning.
+
+Questions: https://mindmajix.com/maven-interview-questions
+
+
+
+Q: What are the archetype goals?
+Four goals associated with archetype plugin:
+Create - creates using a quick-start template.
+Generate – provide a menu of templates.
+Create-from-project – creates an archetype from an existing project.
+Crawl – searches the repository for archetype and updates catalog.
+
+Q: What is parent POMs?
+1. Basically, these are parent projects without code.
+2. Used by companies to define the set of libraries/versions, plugins they want their teams using.
+3. Can have dependencies, build plugins, variables definitions, and even their own parent POM, forming a chain.
+4. A great example is Spring Boot. You can extract it to create production-grade web services crazily fast. 
+
+2. What Are the Aspects Maven Managed?
+Answer:
+Maven provides developers ways in which to manage following:
+•Builds
+•Documentation
+•Reporting
+•Dependencies
+•SCMs
+•Releases
+•Distribution
+•mailing list
+
+What is a project's fully qualified artifact name?
+<groupId>:<artifactId>:<version>
+
+How do you exclude dependency?
+Using the exclusion element.
+
+What is a Mojo?
+A mojo is a Maven plain Old Java Object. Each mojo is an executable goal in Maven, and a plugin is a distribution of one or more related mojos.
+
+Q: How many repositories are there in Maven?
+There are three types of repository present in Maven. This includes Local Repository, Central Repository, and Remote Repository.
+Local Repository- This local repository is located on your local system and it works when you run a maven command. Maven local repository command is %USER_HOME%/.m2 directory.
+Central Repository- Installation from the repository is performed on creating a project from archetype or resolving the dependency.
+Remote Repository- This repository is located on the web. It is just a network accessible location that Maven downloads dependencies from. All the artifacts that remote repository contains are open source.
+
+
+

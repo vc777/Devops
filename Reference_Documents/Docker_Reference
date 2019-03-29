@@ -35,6 +35,16 @@ Docker
 
      https://hub.docker.com/
 
+5. Docker compose installation
+
+	sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+	sudo chmod +x /usr/local/bin/docker-compose
+
+	ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+	docker-compose --version
+
 
 
 
@@ -96,6 +106,18 @@ Docker Commands :
 
 5. Docker Container commands
 
+	- Check what are processes are running on top of container
+
+	    docker top <container id>
+
+	- Remove all stopped containers
+
+	    docker container prune
+
+	- List the ports are listing
+
+	    docker port <container>
+
 	- To check running Docker containers
 
 	  	docker container ps
@@ -115,6 +137,10 @@ Docker Commands :
 	- Crerate a docker container from docker Image in background
 
 	    docker container run -t -d --name <name> <image id>
+
+	    -t --> Allocate a terminal
+	    -i --> Intaractive mode (-i (interactive) flag to keep stdin open)
+	    --read-only  (Set the container to be read-only)
 
 	- Create a container with a port
 
@@ -295,6 +321,145 @@ Docker Help
 				  rm          Remove one or more networks
 
 
+    Docker takes care of the networking aspects so that the containers can communicate with other containers and also with the Docker Host. If you do an ifconfig on the Docker Host, you will see the Docker Ethernet adapter. This adapter is created when Docker is installed on the Docker Host.
+
+    - There are mainly 5 network drivers: Bridge, Host, None, Overlay, Macvlan
+
+    - Bridge : The bridge network is a private default internal network created by docker on the host. So, all containers get an internal IP address and these containers can access each other, using this internal IP. The Bridge networks are usually used when your applications run in standalone containers that need to communicate.
+
+    - Host:  This driver removes the network isolation between the docker host and the docker containers to use the host’s networking directly. So with this, you will not be able to run multiple web containers on the same host, on the same port as the port is now common to all containers in the host network.
+
+    - None : 
+
+    Reference :  https://www.edureka.co/blog/docker-networking/
+
+
+
+
+docker-compose: Command used to configure and manage a group of related containers. It is a frontend to the same api's used by the docker cli, so you can reproduce it's behavior with commands like docker run.
+
+docker-compose.yml: Definition file for a group of containers, used by docker-compose and now also by swarm mode.
+
+swarm mode: Used to manage a group of docker engines as a single entity and provide orchestration (constantly trying to correct any differences between the current state and the target state).
+
+service: One or more containers for the same image and configuration within swarm, multiple containers provide scalability.
+
+stack: One or more services within a swarm, these may be defined using a DAB or a docker-compose.yml file.
+
+bridge network: Network managed by a single docker engine where multiple containers may communicate with each other. You may have multiple networks managed by an engine, and containers can be attached to zero or more networks.
+
+overlay network: Similar to a bridge network but spanning multiple docker engines. These require a key/value store to maintain their state. Swarm mode provides this, but if swarm mode is disabled, you may also use etcd, consul, or zookeeper.
+
+links: a method to connect containers together that predates the bridged network. Its usage is no longer recommended.
+
+classic swarm: A predecessor to the integrated swarm mode that runs as a container, allows multiple engines to appear as one, but does not provide orchestration or include its own k/v store.
+
+
+
+
+
+Docker Compose 
+----------------------------------------------------------------------------------
+
+
+It is a tool for defining and running multi-container Docker applications.
+
+define the services that make up your app in docker-compose.yml so they can be run together in an isolated environment.
+
+
+docker-compose --version/-v
+
+docker-compose up/down
+
+docker-compose config --> syntax check
+
+docker-compose up --scale web=3
+
+docker-compose logs
+
+docker-compose top
+
+docker-compose ps
+
+- Run a docker-compose in Background mode
+docker-compose up -d
+
+
+
+Docker-Swarm
+---------------------------------------------------------------------------------
+
+- Create a Service in swarm
+	docker service create alpine:latest ping 8.8.8.8
+
+- list service
+    docker service ls
+
+- upgrade a relipca
+    docker service update <service id> --replicas 3
+
+-   
+
+
+From Image
+-----------
+version: '3'
+
+services:
+  webapp:
+     image: drupal:8-apache
+     ports:
+      - '8080:80'
+
+  postgres:
+     image: postgres:10
+     environment:
+        POSTGRES_PASSWORD: example
+
+
+From DockerFile
+---------------
+version: '3'
+
+services:
+   nginx:
+      build:
+         context: .
+         dockerfile: nginx.Dockerfile
+      image: nginx-custom
+      ports:
+         - '80:80'
+
+
+Example of File :
+-------------
+version: "3.4"
+services:
+  addison-application:
+    image: "hub.docker.hpecorp.net/gsd-addison-services/partner-lead-processes:${dockerImageTag}"
+    deploy:
+      mode: replicated
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 2
+        delay: 10s
+        order: stop-first
+    ports:
+      - "9090:9090"
+    environment:
+     - NODE_ENV=${env}
+     - VAULT_APPLICATION_PATH=${VAULT_APPLICATION_PATH}
+     - VAULT_GITHUB_TOKEN=${VAULT_GITHUB_TOKEN}
+    networks:
+      - webnet
+    
+networks:
+  webnet:
 
 
 
@@ -307,3 +472,88 @@ Reference Links:
 1. Docker Import/Export page
    
    https://www.jamescoyle.net/how-to/1512-export-and-import-a-docker-image-between-nodes
+
+
+
+
+Docker File Example:
+-------------------
+
+
+#
+##  Build
+##        docker build -t addisontest .
+##  Run (remap container port to host 443 port)
+##        docker run -it -p 443:8443 addisontest
+##  Access in a web browser using base URL https://localhost
+FROM hub.docker.hpecorp.net/global-it/addison-nodejs:3.0.0
+
+# Defining a HOST environment variable will make Addison listen on all interfaces (0.0.0.0)
+# on port 8443  (as port 443 cannot be bound to when running as a non-privileged user)
+ENV ADDISON_HOST=0.0.0.0 \
+    ADDISON_PORT=8091 \
+    https_proxy=http://web-proxy.corp.hpecorp.net:8080 \
+    http_proxy=http://web-proxy.corp.hpecorp.net:8080
+
+USER root
+RUN apk update && \
+    apk add --no-cache ansible python py-pip bash curl && \
+    pip2 install ansible-lint \
+    && rm -rf /tmp/* \
+    && rm -rf /var/cache/apk/* \
+    && rm -rf ~/.cache/
+# Define the health check (Docker EE / UCP only)
+# HEALTHCHECK --interval=1m --timeout=15s --retries=2 \
+#    CMD curl --noproxy localhost -f  -k https://localhost:${ADDISON_PORT}/healthcheck || exit 1
+
+# Copy built application files (assumes npm install run in Jenkinsfile)
+COPY . /home/$user/
+
+# Expose port on which Addison is listening
+EXPOSE $ADDISON_PORT
+
+# Define default command.
+CMD [ "/bin/sh", "./entrypoint.sh" ]
+
+
+
+
+
+Docker Swarm
+--------------------
+
+docker swarm init --listen-addr 10.0.0.9:2337
+
+docker node ls
+
+docker node update --role manager node2
+
+docker swarm join-token manager
+
+docker swarm join 10.0.0.9:2337
+
+
+
+services:
+
+   docker service create --replicas 5 nginx
+
+
+   create :
+
+   docker service create  --name name_swarm nginx
+
+   docker service ls
+
+   docker service rm <name>
+
+   docker service create --publih 80:80 --name name_swarm nginx
+
+   docker service inspect name_swarm --pretty
+
+   docker service tasks name_swarm
+
+   docker service update --replicas 10 name_swarm
+
+   
+

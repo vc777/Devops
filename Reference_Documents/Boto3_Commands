@@ -1,0 +1,207 @@
+Boto3_Commands:
+-------------------------------
+
+
+EC2 :
+-----
+1. Describe instances 
+
+import boto3
+
+ec2 = boto3.client('ec2')
+
+inst = ec2.describe_instances()
+
+print(inst)
+
+2. Stopping the instance 
+
+ec2.stop_instances(InstanceIds = ['i-08d4bf2f7cbbc966d'])
+
+3. Starting the instance
+
+ec2.start_instances(InstanceIds = ['i-0e8336a3c0835a0fe'])
+
+4. reboot
+
+ec2.reboot_instances(InstanceIds = ['i-0e8336a3c0835a0fe'])
+
+5. Start/stop Monitor instances
+
+result = ec2.monitor_instances(InstanceIds = ['i-0e8336a3c0835a0fe'])
+
+result = ec2.unmonitor_instances(InstanceIds = ['i-0e8336a3c0835a0fe'])
+
+
+S3 : 
+----
+
+1. List out the bucket details
+
+import boto3
+
+client = boto3.resource('s3')
+
+my_bucket = client.Bucket('')
+
+bucket_list = client.buckets.all()
+
+for bucket in bucket_list:
+    print bucket.name
+
+for object in bucket_list()
+    print(object)
+
+
+ 2. Upload a file
+
+import boto3
+
+s3 = boto3.client('s3')
+
+s3.upload_file('/root/index.txt','users-workspace','test-user/index.txt')
+
+
+WithOut session ID :
+--------------------
+
+import boto3
+
+s3_re = boto3.resource('s3',aws_access_key_id="AKIAJGUNDFSHKNZUEZAQ",aws_secret_access_key="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",region_name='eu-west-1')
+for buk in s3_re.buckets.all():
+    print(buk.name)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Questions ??
+-------------
+1. Difference in boto3 between resource, client, and session?
+
+To add to the other answer, specifically when comparing Client vs. Resource.
+
+Client:
+
+low-level service access
+generated from service description
+exposes botocore client to the developer
+typically maps 1:1 with the service API
+snake-cased method names (e.g. ListBuckets API => list_buckets method)
+Here's an example of client-level access to an S3 bucket's objects (at most 1000**):
+
+import boto3
+
+client = boto3.client('s3')
+response = client.list_objects(Bucket='mybucket')
+for content in response['Contents']:
+    obj_dict = client.get_object(Bucket='mybucket', Key=content['Key'])
+    print(content['Key'], obj_dict['LastModified'])
+** you would have to use a paginator, or implement your own loop, calling list_objects() repeatedly with a continuation marker if there were more than 1000.
+
+Resource:
+
+higher-level, object-oriented API
+generated from resource description
+uses identifiers and attributes
+has actions (operations on resources)
+exposes subresources and collections
+Here's the equivalent example using resource-level access to an S3 bucket's objects (all):
+
+import boto3
+
+s3 = boto3.resource('s3')
+bucket = s3.Bucket('mybucket')
+for obj in bucket.objects.all():
+    print(obj.key, obj.last_modified)
+Note that in this case you do not have to make a second API call to get the objects; they're available to you as a collection on the bucket. These collections of subresources are lazily-loaded.
+
+Session:
+
+stores configuration information (primarily credentials and selected region)
+allows you to create service clients and resources
+
+
+
+
+
+
+IAM:
+----------
+
+1. list of users
+
+import boto3
+
+iam = boto3.client('iam')
+
+list_users = iam.list_users()
+print(list_users)
+print(list_users['Users'][0]['UserName'])
+
+2. Creation of user
+cre_user = iam.create_user(UserName = 'anand-boto3')
+
+
+iam.update_user(
+    UserName='Valaxy-Demo-User',
+    NewUserName='Valaxy-User-01'
+)
+
+iam.delete_user(
+    UserName='Valaxy-User-01'
+)
+
+
+
+
+
+
+
+
+
+
+
+Lambda
+**************************************************************************************
+**************************************************************************************
+
+1. List out the Buckets :
+
+import boto3
+
+def lambda_handler(event, context):
+    client = boto3.resource('s3')
+    my_bucket = client.Bucket('')
+    bucket_list = client.buckets.all()
+    for bucket in bucket_list:
+        print bucket.name
+    return bucket.name
+
+2
+
+
+
+
+
+
+
+
+
+
+
+

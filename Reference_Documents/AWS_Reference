@@ -1,0 +1,46 @@
+1. EC2
+############################################################################################
+
+Instance types :
+---------------
+
+General purpouse (t2 , t3 , m3 ,m4)     == >  Low troffic websites and web applications
+										 Small databases and midsize databases
+
+Compute optimized (c4 ,c3 )        == >  High performence froent end
+										 Video encoding
+
+Memory optimized (r3)              == >  High performence database
+                                         Distributed memory caches
+
+Storage Optimized (i2, d2)         == >  Data warehouse applications
+										 log or data-proccessing applications
+ 
+GPU instances(g2)                  == >  3D application streming
+										 Machine learning
+
+
+1.1 Check the meta data you passed ??
+	https://54.194.161.194/latest/meta-data/
+
+1.2 Topics :
+    -------
+    Regions
+    Avilability zones
+    data centers
+    
+
+
+
+2. S3 Bucket
+##########################################################################################
+
+#usernames="$(echo $(aws iam list-users | grep "UserName" | awk -F ' ' '{print $2}'))"
+#echo $usernames
+#echo $usernames | sed 's/^.//'| sed 's/.$//'| sed 's/.$//'
+
+rm -rf users_list.txt
+aws iam list-users | grep "UserName" |awk -F ' ' '{print $2}'|sed 's/^.//'|sed 's/.$//'|sed 's/.$//' > users_list.txt
+aws s3 ls s3://users-workspace/ | awk -F ' ' '{print $2}'|sed 's/.$//' > folder_list.txt
+
+

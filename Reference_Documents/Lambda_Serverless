@@ -1,0 +1,42 @@
+Install Serverless
+------------------
+1. Install node
+	# yum install -y gcc-c++ make
+	# curl -sL https://rpm.nodesource.com/setup_6.x | sudo -E bash -
+	# yum install nodejs
+2. Install AWS CLI
+3. Install server less
+	 ->	npm install -g serverless
+	 -> serverless config credentials --provider aws --key AKIAIRIXBPXMGXCXODJA --secret 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 --profile serverless-admin
+	 -> Verify
+	 	serverless
+
+
+
+Serverless:
+-------------------
+- Start the lambda
+	sls deploy -v
+
+- Run the Lambda from cli
+    sls invoke -f hello -l
+
+- Updating the function(Not going to deploy the entire code again)
+	sls deploy function -f hello
+
+- Tail all the logs of the server.
+    sls logs -f hello -t
+
+- Remove the function completly
+    sls remove
+
+- TimeOut
+  --less timeout with Memory
+     timeout: 4
+     memorySize: 128
+
+  --More time out 
+     timeout: 6
+     memorySize: 256
+
+- 
