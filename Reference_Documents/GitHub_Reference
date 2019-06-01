@@ -149,6 +149,7 @@ GitHub Commands:
      - git tag -d <tagname>   // for delete locally
      - git push origin development :refs/tags/<tag name>
      - git checkout v2.4.1 (for detached HEAD mode)
+     - git log --pretty=oneline
 
  19. Git Rebase:
      -----------
